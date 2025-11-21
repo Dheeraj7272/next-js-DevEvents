@@ -1,6 +1,6 @@
 export const events = [
   {
-    slug: "react-conf-2024",
+    slug: "dev-events-chat2",
     image: "/images/event1.png",
     title: "React Conf 2024",
     location: "San Francisco, CA",
