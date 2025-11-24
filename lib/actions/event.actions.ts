@@ -3,7 +3,7 @@
 import { Event } from "@/database";
 import connectDB from "@/lib/mongodb";
 
-export const getSimilarEvents = async (slug: string) => {
+export const getSimilarEventsBySlug = async (slug: string) => {
   try {
     await connectDB();
     const event = await Event.findOne({ slug });
