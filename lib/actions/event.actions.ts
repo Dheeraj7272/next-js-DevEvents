@@ -10,7 +10,7 @@ export const getSimilarEvents = async (slug: string) => {
     return await Event.find({
       _id: { $ne: event._id },
       tags: { $in: event.tags },
-    });
+    }).lean();
   } catch (error) {
     console.log(error);
     return [];

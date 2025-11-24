@@ -2,7 +2,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import BookEvent from "@/components/BookEvent";
-import { getSimilarEvents } from "@/components/actions.event.actions";
+import { getSimilarEvents } from "@/lib/actions/event.actions";
 import { IEvent } from "@/database";
 import EventCard from "@/components/EventCard";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -73,8 +73,8 @@ const EventDetailsPage = async ({
   } = data.event;
   const bookings = 10;
 
-  const similarEvents: IEvent[] = await getSimilarEvents(slug);
-  console.log(similarEvents?.[0], "similarEvents");
+  const similarEvents = await getSimilarEvents(slug);
+  console.log(similarEvents[0], "similarEvents");
   return (
     <section id="event">
       <div className="header">
@@ -134,8 +134,8 @@ const EventDetailsPage = async ({
         <h2>Similar Events</h2>
         <div className="events">
           {similarEvents?.length
-            ? similarEvents.map((similarEvent: IEvent) => (
-                <EventCard key={similarEvent.id} {...similarEvent} />
+            ? similarEvents.map((similarEvent: any) => (
+                <EventCard key={similarEvent._id} {...similarEvent} />
               ))
             : undefined}
         </div>
