@@ -12,7 +12,6 @@ const page = async () => {
     process.env.NEXT_PUBLIC_BASE_URL + "/api/events"
   );
   const { events } = await response.json();
-  console.log("In the page components");
   return (
     <section>
       <h1 className="text-center">

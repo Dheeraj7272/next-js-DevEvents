@@ -5,6 +5,7 @@ import BookEvent from "@/components/BookEvent";
 import { getSimilarEvents } from "@/lib/actions/event.actions";
 import { IEvent } from "@/database";
 import EventCard from "@/components/EventCard";
+import { cacheLife } from "next/cache";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const EventDetailItem = ({
@@ -47,8 +48,9 @@ const EventDetailsPage = async ({
 }: {
   params: Promise<{ slug: string }>;
 }) => {
+    "use cache"
+    cacheLife("hours")
   const { slug } = await params;
-  console.log(slug);
   if (!BASE_URL) throw new Error("Base url not found");
   if (!slug || (slug as string).trim()?.length == 0)
     console.log("Invalid slug");
@@ -56,7 +58,6 @@ const EventDetailsPage = async ({
 
   if (!eventDetails.ok) return notFound();
   const data = await eventDetails.json();
-  console.log(data, "eventDetails");
   const {
     description,
     agenda,
@@ -70,6 +71,7 @@ const EventDetailsPage = async ({
     audience,
     location,
     organizer,
+    _id,
   } = data.event;
   const bookings = 10;
 
@@ -126,7 +128,7 @@ const EventDetailsPage = async ({
             ) : (
               <p className="text-sm">Be the first to book your slot!</p>
             )}
-            <BookEvent />
+            <BookEvent eventId={_id} slug={slug} />
           </div>
         </aside>
       </div>
